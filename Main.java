@@ -1,5 +1,10 @@
+import javax.swing.*;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Game of life :)");
+        JFrame f = new JFrame();
+        JLabel o = new JLabel("Conway's Game of Life :)");
+        f.add(o);
+        f.setVisible(true);
     }
 }
