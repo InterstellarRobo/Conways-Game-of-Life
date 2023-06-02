@@ -12,44 +12,14 @@ public class World
       world = new boolean[width][height];
     }
 
-    public void flipCell(int x, int y)
-    {
-      world[x][y] = !world[x][y];
-    }
-    /*
-
-    * Takes an array of coordinates and populates the cells, e.g. { {0, 0}, {0, 1}, {1, 1} } will be made alive
-    * Invalid coordinates will throw exception.
-    */
-    public void populateCells(int[][] coordinates) 
-    {
-      for (int i = 0; i < coordinates.length; i++)
-        {
-          int x = coordinates[i][0];
-          int y = coordinates[i][1];
-          world[x][y] = true;
-        }
-      
-    }
-
-    /*
-
-    * Takes an array of coordinates and kills the cells, e.g. { {0, 0}, {0, 1}, {1, 1} } will be made dead
-    * Invalid coordinates will throw exception.
-    */
-    public void depopulateCells(int[][] coordinates) 
-    {
-      for (int i = 0; i < coordinates.length; i++)
-        {
-          int x = coordinates[i][0];
-          int y = coordinates[i][1];
-          world[x][y] = false;
-        }
-    }
-
     public boolean[][] getAsArray()
     {
       return world;
+    }
+    
+    public void flipCell(int x, int y)
+    {
+      world[x][y] = !world[x][y];
     }
     
     public void update()
@@ -77,7 +47,7 @@ public class World
       System.out.print(this);
       System.out.println(border);
     }
-    
+
     public String toString()
     {
       String board = "";
@@ -97,6 +67,37 @@ public class World
           board += "\n";
         }
       return board;
+    }
+    
+    /*
+
+    * Takes an array of coordinates and populates the cells, e.g. { {0, 0}, {0, 1}, {1, 1} } will be made alive
+    * NOT protected against unsafe coordinates/unsafe arrays, e.g. ones not of the format [n][2]
+    */
+    public void populateCells(int[][] coordinates) 
+    {
+      for (int i = 0; i < coordinates.length; i++)
+        {
+          int x = coordinates[i][0];
+          int y = coordinates[i][1];
+          world[x][y] = true;
+        }
+      
+    }
+
+    /*
+
+    * Takes an array of coordinates and kills the cells, e.g. { {0, 0}, {0, 1}, {1, 1} } will be made dead
+    * NOT protected against unsafe coordinates/unsafe arrays, e.g. ones not of the format [n][2]
+    */
+    public void depopulateCells(int[][] coordinates) 
+    {
+      for (int i = 0; i < coordinates.length; i++)
+        {
+          int x = coordinates[i][0];
+          int y = coordinates[i][1];
+          world[x][y] = false;
+        }
     }
 
     private int numberOfNeighbours(int x, int y)
