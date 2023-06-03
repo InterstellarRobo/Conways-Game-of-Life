@@ -16,6 +16,14 @@ public class World
     {
       return world;
     }
+
+    public int getWidth() {
+      return world[0].length;
+    }
+
+    public int getHeight() {
+      return world.length;
+    }
     
     public void flipCell(int x, int y)
     {
