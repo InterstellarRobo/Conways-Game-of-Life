@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.Hashtable;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -14,6 +15,7 @@ public class Game {
 
     private boolean isRunning;
     private Timer simTimer;
+    private int speedMultiplier;
 
     public Game() {
         this(20, 20);
@@ -53,18 +55,29 @@ public class Game {
         reset.setFocusable(false);
         topRight.add(reset);
 
-        speed = new JSlider(25, 200, 100);
+        JLabel slowerLabel = new JLabel(scale(24, 24, new ImageIcon("icons/turtle.png")));
+        JLabel fasterLabel = new JLabel(scale(24, 24, new ImageIcon("icons/hare.png")));
+
+        speed = new JSlider(1, 500, 250);
+        speed.setInverted(true);
         speed.setBackground(Color.BLACK);
+        speed.setPaintLabels(true);
+        Hashtable<Integer, JLabel> speedLabels = new Hashtable<Integer, JLabel>();
+        speedLabels.put(1, fasterLabel);
+        speedLabels.put(500, slowerLabel);
+        speed.setLabelTable(speedLabels);
+        speedMultiplier = speed.getValue();
         topRight.add(speed, 0);
 
         startStop.addActionListener((e) -> this.startStopClicked());
         reset.addActionListener((e) -> this.resetGame());
-        speed.addChangeListener((e) -> System.out.println("changed!"));
+        speed.addChangeListener((e) -> this.speedMultiplier = speed.getValue());
 
         gameBoard = new GameBoard(width, height);
 
         f.add(topBar, BorderLayout.NORTH);
         f.add((JPanel) gameBoard, BorderLayout.CENTER);
+        startStop.setPreferredSize(reset.getPreferredSize()); //keeps start stop button size from changing
         f.pack();
         f.setVisible(true);
     }
@@ -89,11 +102,16 @@ public class Game {
     private void startSimulation() {
         simTimer = new Timer();
         simTimer.scheduleAtFixedRate(new TimerTask() {
+            private int c = 0;
             @Override
             public void run() {
-                gameBoard.simulateGeneration();
+                if(c % speedMultiplier == 0) {
+                    gameBoard.simulateGeneration();
+                    c = 0;
+                }
+                c++;
             }
-        }, 0, 250);
+        }, 0, 1);
     }
 
     private void stopSimulation() {
@@ -106,5 +124,9 @@ public class Game {
 
     private void resetGame() {
         gameBoard.clearBoard();
+    }
+
+    private ImageIcon scale(int height, int width, ImageIcon image) {
+        return new ImageIcon(image.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
     }
 }
