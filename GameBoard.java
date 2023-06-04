@@ -8,6 +8,9 @@ public class GameBoard extends JPanel implements ActionListener{
 
     public GameBoard(int width, int height) {
         this.setLayout(new GridLayout(height, width, 2, 2));
+        Color backgroundColor = Color.BLACK;
+        this.setBackground(backgroundColor);
+        this.setBorder(BorderFactory.createLineBorder(backgroundColor, 2, false));
         
         buttonArray = new JButton[height][width];
         internalGame = new World(width, height);
@@ -35,12 +38,12 @@ public class GameBoard extends JPanel implements ActionListener{
     }
 
     private void paintDead(JButton b) {
-        b.setBackground(Color.BLUE);
+        b.setBackground(new Color(0, 0, 128));
         b.setBorder(null);
     }
 
     private void paintAlive(JButton b) {
-        b.setBackground(Color.PINK);
+        b.setBackground(new Color(179, 0, 163));
         b.setBorder(null);
     }
 

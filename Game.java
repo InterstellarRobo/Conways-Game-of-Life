@@ -22,17 +22,31 @@ public class Game {
         f.setLayout(new BorderLayout());
 
         JPanel topBar = new JPanel();
-        topBar.setLayout(new FlowLayout());
+        topBar.setBackground(Color.BLACK);
+        topBar.setLayout(new BorderLayout());
+
+        JPanel topLeft = new JPanel();
+        topLeft.setOpaque(false);
+        topLeft.setLayout(new FlowLayout(FlowLayout.LEADING));
+        topBar.add(topLeft, BorderLayout.WEST);
+
+        JPanel topRight = new JPanel();
+        topRight.setOpaque(false);
+        topRight.setLayout(new FlowLayout(FlowLayout.TRAILING));
+        topBar.add(topRight, BorderLayout.EAST);
         
 
         title = new JLabel("CGOL!");
-        topBar.add(title);
+        title.setForeground(Color.WHITE);
+        topLeft.add(title);
+
         startStop = new JButton("Start");
         startStop.setFocusable(false);
-        topBar.add(startStop);
+        topRight.add(startStop);
+
         reset = new JButton("Reset");
         reset.setFocusable(false);
-        topBar.add(reset);
+        topRight.add(reset);
 
         startStop.addActionListener((e) -> this.startStopClicked());
         reset.addActionListener((e) -> this.resetGame());
@@ -58,6 +72,7 @@ public class Game {
             this.stopSimulation();
             this.startStop.setText("Start");
         }
+        this.reset.setEnabled(!b);
         this.isRunning = b;
     }
 
@@ -77,11 +92,9 @@ public class Game {
 
     private void startStopClicked() {
         this.toggleIsRunning();
-        System.out.println(isRunning);
     }
 
     private void resetGame() {
         gameBoard.clearBoard();
-        System.out.println("reset!");
     }
 }
