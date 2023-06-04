@@ -18,6 +18,7 @@ public class GameBoard extends JPanel implements ActionListener{
             buttonArray[row][col] = new JButton();
             JButton b = buttonArray[row][col];
             b.setPreferredSize(new Dimension(16, 16));
+            b.setFocusable(false);
             b.putClientProperty(ButtonProperty.ROW, row);
             b.putClientProperty(ButtonProperty.COL, col);
             b.putClientProperty(ButtonProperty.ALIVE, false);
