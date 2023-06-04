@@ -112,6 +112,10 @@ public class World
         }
     }
 
+    public void depopulateAllCells() {
+      for (int row = 0; row < world.length; row++) for (int col = 0; col < world[0].length; col++) world[row][col] = false;
+    }
+
     private int numberOfNeighbours(int x, int y)
     {
       int count = 0;

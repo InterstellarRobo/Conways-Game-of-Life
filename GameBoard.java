@@ -12,15 +12,26 @@ public class GameBoard extends JPanel implements ActionListener{
         buttonArray = new JButton[height][width];
         internalGame = new World(width, height);
         for (int row = 0; row < buttonArray.length; row++) for (int col = 0; col < buttonArray[0].length; col++) {
+            buttonArray[row][col] = new JButton();
             JButton b = buttonArray[row][col];
-            b = new JButton();
             b.setPreferredSize(new Dimension(16, 16));
             b.putClientProperty(ButtonProperty.ROW, row);
             b.putClientProperty(ButtonProperty.COL, col);
+            b.putClientProperty(ButtonProperty.ALIVE, false);
             this.updateButtonState(b);
             b.addActionListener(this);
             this.add(b);
         }
+    }
+
+    public void simulateGeneration() {
+        internalGame.update();
+        this.updateAllButtonStates();
+    }
+
+    public void clearBoard() {
+        internalGame.depopulateAllCells();
+        this.updateAllButtonStates();
     }
 
     private void paintDead(JButton b) {
@@ -35,13 +46,19 @@ public class GameBoard extends JPanel implements ActionListener{
 
     private void updateButtonState(JButton b) {
         if (b.getClientProperty(ButtonProperty.ROW) != null && b.getClientProperty(ButtonProperty.COL) != null) {
-            if (internalGame.cellStatus((int) b.getClientProperty(ButtonProperty.ROW), (int) b.getClientProperty(ButtonProperty.COL))) this.paintAlive(b);
-            else paintDead(b);
+            if (internalGame.cellStatus((int) b.getClientProperty(ButtonProperty.ROW), (int) b.getClientProperty(ButtonProperty.COL))){ 
+                this.paintAlive(b);
+            }
+            else { 
+                this.paintDead(b);
+            }
         }
     }
 
     private void updateAllButtonStates() {
-
+        for (JButton[] q : buttonArray) for (JButton b : q) {
+            this.updateButtonState(b);
+        }
     }
 
     private void toggleState(JButton b) {

@@ -30,7 +30,7 @@ public class Game {
         startStop.addActionListener((e) -> this.startStopClicked());
         reset.addActionListener((e) -> this.resetGame());
 
-        gameBoard = new GameBoard(10, 10);
+        gameBoard = new GameBoard(20, 20);
 
         f.add(topBar, BorderLayout.NORTH);
         f.add((JPanel) gameBoard, BorderLayout.CENTER);
@@ -39,10 +39,12 @@ public class Game {
     }
 
     private void startStopClicked() {
+        gameBoard.simulateGeneration();
         System.out.println("click!");
     }
 
     private void resetGame() {
+        gameBoard.clearBoard();
         System.out.println("reset!");
     }
 }
