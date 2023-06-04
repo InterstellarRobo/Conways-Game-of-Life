@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Game {
     private JLabel title; //Make logo Owen created
@@ -9,7 +11,12 @@ public class Game {
 
     private GameBoard gameBoard;
 
+    private boolean isRunning;
+    private Timer simTimer;
+
     public Game() {
+        isRunning = false;
+
         JFrame f = new JFrame("Conway's Game of Life :)");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setLayout(new BorderLayout());
@@ -38,9 +45,39 @@ public class Game {
         f.setVisible(true);
     }
 
+    public void toggleIsRunning() {
+        setIsRunning(!isRunning);
+    }
+
+    public void setIsRunning(boolean b) {
+        if (b) {
+            this.startStop.setText("Stop");
+            this.startSimulation();
+        }
+        else {
+            this.stopSimulation();
+            this.startStop.setText("Start");
+        }
+        this.isRunning = b;
+    }
+
+    private void startSimulation() {
+        simTimer = new Timer();
+        simTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                gameBoard.simulateGeneration();
+            }
+        }, 0, 250);
+    }
+
+    private void stopSimulation() {
+        if(simTimer != null) simTimer.cancel();
+    }
+
     private void startStopClicked() {
-        gameBoard.simulateGeneration();
-        System.out.println("click!");
+        this.toggleIsRunning();
+        System.out.println(isRunning);
     }
 
     private void resetGame() {
