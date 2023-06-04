@@ -7,6 +7,7 @@ public class Game {
     private JLabel title; //Make logo Owen created
     private JButton startStop;
     private JButton reset;
+    private JSlider speed;
     //add speed slider somewhere
 
     private GameBoard gameBoard;
@@ -52,8 +53,13 @@ public class Game {
         reset.setFocusable(false);
         topRight.add(reset);
 
+        speed = new JSlider(25, 200, 100);
+        speed.setBackground(Color.BLACK);
+        topRight.add(speed, 0);
+
         startStop.addActionListener((e) -> this.startStopClicked());
         reset.addActionListener((e) -> this.resetGame());
+        speed.addChangeListener((e) -> System.out.println("changed!"));
 
         gameBoard = new GameBoard(width, height);
 
