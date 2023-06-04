@@ -57,13 +57,13 @@ public class Game {
         JLabel slowerLabel = new JLabel(scale(24, 24, new ImageIcon("icons/turtle.png")));
         JLabel fasterLabel = new JLabel(scale(24, 24, new ImageIcon("icons/hare.png")));
 
-        speed = new JSlider(1, 500, 250);
+        speed = new JSlider(25, 475, 250);
         speed.setInverted(true);
         speed.setBackground(Color.BLACK);
         speed.setPaintLabels(true);
         Hashtable<Integer, JLabel> speedLabels = new Hashtable<Integer, JLabel>();
-        speedLabels.put(1, fasterLabel);
-        speedLabels.put(500, slowerLabel);
+        speedLabels.put(25, fasterLabel);
+        speedLabels.put(475, slowerLabel);
         speed.setLabelTable(speedLabels);
         speedMultiplier = speed.getValue();
         topRight.add(speed, 0);
