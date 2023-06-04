@@ -9,7 +9,6 @@ public class Game {
     private JButton startStop;
     private JButton reset;
     private JSlider speed;
-    //add speed slider somewhere
 
     private GameBoard gameBoard;
 
