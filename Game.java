@@ -15,6 +15,10 @@ public class Game {
     private Timer simTimer;
 
     public Game() {
+        this(20, 20);
+    }
+
+    public Game(int width, int height) {
         isRunning = false;
 
         JFrame f = new JFrame("Conway's Game of Life :)");
@@ -51,7 +55,7 @@ public class Game {
         startStop.addActionListener((e) -> this.startStopClicked());
         reset.addActionListener((e) -> this.resetGame());
 
-        gameBoard = new GameBoard(20, 20);
+        gameBoard = new GameBoard(width, height);
 
         f.add(topBar, BorderLayout.NORTH);
         f.add((JPanel) gameBoard, BorderLayout.CENTER);

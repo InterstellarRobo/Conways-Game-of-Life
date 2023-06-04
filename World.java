@@ -9,7 +9,7 @@ public class World
 
     public World(int width, int height)
     {
-      world = new boolean[width][height];
+      world = new boolean[height][width];
     }
 
     public boolean[][] getAsArray()
