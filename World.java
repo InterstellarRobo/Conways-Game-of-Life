@@ -24,6 +24,10 @@ public class World
     public int getHeight() {
       return world.length;
     }
+
+    public boolean cellStatus(int x, int y) {
+      return world[x][y];
+    }
     
     public void flipCell(int x, int y)
     {
@@ -37,7 +41,7 @@ public class World
         {
           for (int y = 0; y < world[0].length; y++)
             {
-              newWorld[x][y] = checkCell(x, y);
+              newWorld[x][y] = shouldCellLive(x, y);
             }
         }
       world = newWorld;
@@ -124,7 +128,7 @@ public class World
       return count;
     }
 
-    private boolean checkCell(int x, int y)
+    private boolean shouldCellLive(int x, int y)
     {
       int num = numberOfNeighbours(x, y);
       if (num < 2 || num > 3)
