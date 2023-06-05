@@ -8,6 +8,7 @@ public class Game {
     private JLabel title; //Make logo Owen created
     private JButton startStop;
     private JButton reset;
+    private JButton help;
     private JSlider speed;
 
     private GameBoard gameBoard;
@@ -21,6 +22,9 @@ public class Game {
     }
 
     public Game(int width, int height) {
+        final ImageIcon helpIcon = new ImageIcon("icons/help.png");
+        final String helpText = "Click a cell to toggle its state, i.e. alive or dead.\nPress start to begin the simulation.\nPress reset to clear the board.\nIf a cell has fewer than two neighbours or greater than three neighbours, it will die.\nIf an alive cell has two or three neighbours, it will live on to the next generation.\nIf a dead cell has exactly three neighbours, it will come back to life.";
+
         isRunning = false;
 
         JFrame f = new JFrame("Conway's Game of Life :)");
@@ -42,7 +46,7 @@ public class Game {
         topBar.add(topRight, BorderLayout.EAST);
         
 
-        title = new JLabel("CGOL!");
+        title = new JLabel(scale(40, 40, new ImageIcon("icons/CGOL.png")));
         title.setForeground(Color.WHITE);
         topLeft.add(title);
 
@@ -53,6 +57,10 @@ public class Game {
         reset = new JButton("Reset");
         reset.setFocusable(false);
         topRight.add(reset);
+
+        help = new JButton("Help", scale(16, 16, helpIcon));
+        help.setFocusable(false);
+        topRight.add(help);
 
         JLabel slowerLabel = new JLabel(scale(24, 24, new ImageIcon("icons/turtle.png")));
         JLabel fasterLabel = new JLabel(scale(24, 24, new ImageIcon("icons/hare.png")));
@@ -70,6 +78,7 @@ public class Game {
 
         startStop.addActionListener((e) -> this.startStopClicked());
         reset.addActionListener((e) -> this.resetGame());
+        help.addActionListener((e) -> JOptionPane.showMessageDialog(f, helpText, "Help", JOptionPane.QUESTION_MESSAGE, scale(32, 32, helpIcon)));
         speed.addChangeListener((e) -> this.speedMultiplier = speed.getValue());
 
         gameBoard = new GameBoard(width, height);
